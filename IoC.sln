@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoC", "IoC\IoC.csproj", "{40331A67-9230-4FA2-B812-4E0BE955896C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoCTest", "IoCTest\IoCTest.csproj", "{9A18FA6B-5C57-4177-A3E7-4C29E0E91527}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40331A67-9230-4FA2-B812-4E0BE955896C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40331A67-9230-4FA2-B812-4E0BE955896C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40331A67-9230-4FA2-B812-4E0BE955896C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40331A67-9230-4FA2-B812-4E0BE955896C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A18FA6B-5C57-4177-A3E7-4C29E0E91527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A18FA6B-5C57-4177-A3E7-4C29E0E91527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A18FA6B-5C57-4177-A3E7-4C29E0E91527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A18FA6B-5C57-4177-A3E7-4C29E0E91527}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2042CA38-AFE4-4307-AE93-510711ADB347}
+	EndGlobalSection
+EndGlobal
