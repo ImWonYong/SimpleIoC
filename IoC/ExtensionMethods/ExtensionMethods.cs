@@ -32,6 +32,4 @@ namespace IoC.ExtensionMethods
             return type.GetInterfaces().First();
         }
     }
-
-
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IoCTest.Mocks
 {
-    internal class NotImplementingInterfaceStub
+    internal class StubNotImplementingInterface
     {
     }
 }

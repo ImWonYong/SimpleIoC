@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace IoCTest.Stubs
 {
-    internal interface IHavingAutowiredStub
+    internal interface IStubHavingAutowired
     {
         int GetSubStubValue();
         int GetValue();
     }
 
-    internal class HavingAutowiredStub : IHavingAutowiredStub
+    internal class StubHavingAutowired : IStubHavingAutowired
     {
         public const int OFFSET_VALUE = 42;
 

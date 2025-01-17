@@ -13,14 +13,14 @@ namespace IoCTest
         private BeanContainer container;
 
         [TestInitialize]
-        public void InitBeforeEachTest()
+        public void SetUpBeforeEach()
         {
             container = new BeanContainer();
         }
 
 
         [TestMethod]
-        public void AddAndGet()
+        public void AddAndGetNotHavingAutowired()
         {
             container.RegisterSingleton<BaseStub>();
 
@@ -28,22 +28,22 @@ namespace IoCTest
 
             Assert.IsNotNull(service);
             Assert.IsInstanceOfType(service, typeof(IBaseStub));
-            Assert.IsTrue(service.GetValue() == 42);
+            Assert.IsTrue(service.GetValue() == BaseStub.VALUE);
         }
 
 
         [TestMethod]
-        public void AddAndGetServiceHavingAutowired()
+        public void AddAndGetHavingAutowired()
         {
-            container.RegisterSingleton<HavingAutowiredStub>();
+            container.RegisterSingleton<StubHavingAutowired>();
             container.RegisterSingleton<BaseStub>();
 
-            var havingAutowiredStub = container.GetService<IHavingAutowiredStub>();
+            var havingAutowiredStub = container.GetService<IStubHavingAutowired>();
 
             Assert.IsNotNull(havingAutowiredStub);
-            Assert.IsInstanceOfType(havingAutowiredStub, typeof(IHavingAutowiredStub));
+            Assert.IsInstanceOfType(havingAutowiredStub, typeof(IStubHavingAutowired));
             Assert.IsTrue(havingAutowiredStub.GetSubStubValue() == BaseStub.VALUE);
-            Assert.IsTrue(havingAutowiredStub.GetValue() == BaseStub.VALUE + HavingAutowiredStub.OFFSET_VALUE);
+            Assert.IsTrue(havingAutowiredStub.GetValue() == BaseStub.VALUE + StubHavingAutowired.OFFSET_VALUE);
 
             var injectedStub = container.GetService<IBaseStub>();
             Assert.IsNotNull(injectedStub);
@@ -55,11 +55,11 @@ namespace IoCTest
         [TestMethod]
         public void AddServiceNotImplementingInterface_ItThrow()
         {
-            var stubService = new NotImplementingInterfaceStub();
+            var stub = new StubNotImplementingInterface();
 
             Assert.ThrowsException<InterfaceNotImplementedException>(() =>
             {
-                container.RegisterSingleton<NotImplementingInterfaceStub>();
+                container.RegisterSingleton<StubNotImplementingInterface>();
             });
         }
 
@@ -77,11 +77,11 @@ namespace IoCTest
         [TestMethod]
         public void GetServiceOnlyParentBeanRegistered_ItThrow()
         {
-            container.RegisterSingleton<HavingAutowiredStub>();
+            container.RegisterSingleton<StubHavingAutowired>();
 
             Assert.ThrowsException<NotRegisteredBeanException>(() =>
             {
-                var havingAutowiredStub = container.GetService<IHavingAutowiredStub>();
+                var havingAutowiredStub = container.GetService<IStubHavingAutowired>();
             });
         }
     }

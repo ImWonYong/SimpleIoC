@@ -50,9 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContainerTest.cs" />
-    <Compile Include="Stubs\HavingAutowiredStub.cs" />
+    <Compile Include="Stubs\StubHavingAutowired.cs" />
     <Compile Include="Stubs\BaseStub.cs" />
-    <Compile Include="Stubs\NotImplementingInterfaceStub.cs" />
+    <Compile Include="Stubs\StubNotImplementingInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

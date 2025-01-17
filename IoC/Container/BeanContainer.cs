@@ -11,9 +11,16 @@ using System.Threading.Tasks;
 
 namespace IoC.Container
 {
+    /// <summary>
+    /// TODO
+    ///     1) improve performance > 
+    ///     2) test Get/Register in multi thread environment
+    ///     3) Add Feature - RegisterTransient
+    ///     4) ...
+    /// </summary>
     public class BeanContainer
     {
-        private readonly ConcurrentDictionary<Type, Lazy<object>> _beanMap = new ConcurrentDictionary<Type, Lazy<object>>();
+        private readonly ConcurrentDictionary<Type, Lazy<object>> _beanStorage = new ConcurrentDictionary<Type, Lazy<object>>();
 
         public void RegisterSingleton<T>() where T : class
         {
@@ -23,14 +30,14 @@ namespace IoC.Container
                 throw new InterfaceNotImplementedException();
             }
 
-            _beanMap.TryAdd(type.FirstInterface(), DependenciesInjectedBean(type));
+            _beanStorage.TryAdd(type.FirstInterface(), DependenciesInjectedBean(type));
         }
 
         public T GetService<T>() where T : class
         {
-            if (_beanMap.TryGetValue(typeof(T), out var lazyResult))
+            if (_beanStorage.TryGetValue(typeof(T), out var result))
             {
-                return lazyResult.Value as T;
+                return result.Value as T;
             }
             throw new NotRegisteredBeanException();
         }
@@ -57,13 +64,13 @@ namespace IoC.Container
 
                 foreach (var prop in type.GetProperties(BINDING_FLAG).Where(each => each.HasAutowiredAttribute()))
                 {
-                    var dependency = _beanMap.GetOrAdd(prop.PropertyType, DependenciesInjectedBean(prop.PropertyType)).Value;
+                    var dependency = _beanStorage.GetOrAdd(prop.PropertyType, DependenciesInjectedBean(prop.PropertyType)).Value;
                     prop.SetValue(result, dependency);
                 }
 
                 foreach (var field in type.GetFields(BINDING_FLAG).Where(each => each.HasAutowiredAttribute()))
                 {
-                    var dependency = _beanMap.GetOrAdd(field.FieldType, DependenciesInjectedBean(field.FieldType)).Value;
+                    var dependency = _beanStorage.GetOrAdd(field.FieldType, DependenciesInjectedBean(field.FieldType)).Value;
                     field.SetValue(result, dependency);
                 }
 
