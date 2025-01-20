@@ -1,6 +1,5 @@
 ﻿using IoC.Attr;
 using IoC.Exceptions;
-using IoC.ExtensionMethods;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -14,9 +13,9 @@ namespace IoC.Container
     /// <summary>
     /// TODO
     ///     1) improve performance > 
-    ///     2) test Get/Register in multi thread environment
-    ///     3) Add Feature - RegisterTransient
-    ///     4) ...
+    ///     2) test Get/Register in multi-thread environment
+    ///     3) Add Feature - RegisterTransient 
+    ///     4) Add Factory Bean
     /// </summary>
     public class BeanContainer
     {
@@ -30,7 +29,7 @@ namespace IoC.Container
                 throw new InterfaceNotImplementedException();
             }
 
-            _beanStorage.TryAdd(type.FirstInterface(), DependenciesInjectedBean(type));
+            _beanStorage.TryAdd(FirstInterface(type), DependenciesInjectedBean(type));
         }
 
         public T GetService<T>() where T : class
@@ -62,13 +61,13 @@ namespace IoC.Container
                     throw e;
                 }
 
-                foreach (var prop in type.GetProperties(BINDING_FLAG).Where(each => each.HasAutowiredAttribute()))
+                foreach (var prop in type.GetProperties(BINDING_FLAG).Where(each => HasAutowiredAttribute(each)))
                 {
                     var dependency = _beanStorage.GetOrAdd(prop.PropertyType, DependenciesInjectedBean(prop.PropertyType)).Value;
                     prop.SetValue(result, dependency);
                 }
 
-                foreach (var field in type.GetFields(BINDING_FLAG).Where(each => each.HasAutowiredAttribute()))
+                foreach (var field in type.GetFields(BINDING_FLAG).Where(each => HasAutowiredAttribute(each)))
                 {
                     var dependency = _beanStorage.GetOrAdd(field.FieldType, DependenciesInjectedBean(field.FieldType)).Value;
                     field.SetValue(result, dependency);
@@ -76,6 +75,21 @@ namespace IoC.Container
 
                 return result;
             });
+        }
+
+        private static bool HasAutowiredAttribute(PropertyInfo propertyInfo)
+        {
+            return propertyInfo.GetCustomAttribute<AutowiredAttribute>() != null;
+        }
+
+        private static bool HasAutowiredAttribute(FieldInfo fieldInfo)
+        {
+            return fieldInfo.GetCustomAttribute<AutowiredAttribute>() != null;
+        }
+
+        private static Type FirstInterface(Type type)
+        {
+            return type.GetInterfaces().First();
         }
     }
 }

@@ -47,7 +47,6 @@
     <Compile Include="Container\BeanContainer.cs" />
     <Compile Include="Exceptions\InterfaceNotImplementedException.cs" />
     <Compile Include="Exceptions\NotRegisteredBeanException.cs" />
-    <Compile Include="ExtensionMethods\ExtensionMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
